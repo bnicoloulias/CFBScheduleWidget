@@ -1,0 +1,121 @@
+name: CollegeFootballSchedule
+options:
+  bundleIdPrefix: com.bobbynicoloulias
+  createIntermediateGroups: true
+  deploymentTarget:
+    macOS: "26.0"
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "10"
+    DEAD_CODE_STRIPPING: YES
+    # Ad-hoc ("Sign to Run Locally") so the project builds and runs without a
+    # provisioning profile. Switch to your team in Signing & Capabilities if
+    # you want to run it on another Mac.
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+    PROVISIONING_PROFILE_SPECIFIER: ""
+
+targets:
+  CollegeFootballSchedule:
+    type: application
+    platform: macOS
+    sources:
+      - App
+      - Shared
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: College Football Schedule
+        # Follow the build settings, so bumping CURRENT_PROJECT_VERSION really
+        # changes the bundle. WidgetKit's chronod caches a widget's descriptor
+        # keyed on this version and will not re-read the extension until it
+        # changes -- a stale name or configuration in the widget gallery is the
+        # symptom.
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSApplicationCategoryType: public.app-category.sports
+        NSHumanReadableCopyright: ""
+    entitlements:
+      path: App/CollegeFootballSchedule.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.files.user-selected.read-only: true
+        com.apple.security.network.client: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bobbynicoloulias.CollegeFootballSchedule
+        PRODUCT_NAME: CollegeFootballSchedule
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ENABLE_PREVIEWS: YES
+        COMBINE_HIDPI_IMAGES: YES
+    dependencies:
+      - target: CollegeFootballScheduleWidget
+        embed: true
+
+  CollegeFootballScheduleWidget:
+    type: app-extension
+    platform: macOS
+    sources:
+      - Widget
+      - Shared
+    info:
+      path: Widget/Info.plist
+      properties:
+        CFBundleDisplayName: College Football Schedule
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: Widget/CollegeFootballScheduleWidget.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bobbynicoloulias.CollegeFootballSchedule.Widget
+        PRODUCT_NAME: CollegeFootballScheduleWidget
+        ENABLE_PREVIEWS: YES
+        SKIP_INSTALL: YES
+
+  CollegeFootballScheduleTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bobbynicoloulias.CollegeFootballScheduleTests
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: CollegeFootballSchedule
+
+schemes:
+  CollegeFootballSchedule:
+    build:
+      targets:
+        CollegeFootballSchedule: all
+        CollegeFootballScheduleWidget: all
+        CollegeFootballScheduleTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - CollegeFootballScheduleTests
+
+  # Run this scheme to attach Xcode to the widget extension, which is the only
+  # way `print` from the provider reaches a console -- chronod launches the
+  # extension normally, so its stdout goes nowhere. Xcode asks which app to run
+  # it in; pick CollegeFootballSchedule.
+  CollegeFootballScheduleWidget:
+    build:
+      targets:
+        CollegeFootballScheduleWidget: all
+    run:
+      config: Debug
