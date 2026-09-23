@@ -37,6 +37,28 @@ extension Game {
         return "TBD"
     }
 
+    /// e.g. "MICH 7 — 14 OSU", opponent first as on a scoreboard. `nil` until
+    /// both scores are known.
+    func liveScoreLine(teamAbbreviation: String) -> String? {
+        guard let teamScore, let opponentScore else { return nil }
+        return "\(opponent.abbreviation) \(opponentScore) — \(teamScore) \(teamAbbreviation)"
+    }
+
+    /// The kickoff day in as few characters as a Lock Screen widget allows:
+    /// "Sat" while the game is within the week, "11/29" beyond it.
+    func compactDay(now: Date = .now) -> String {
+        let daysAway = Calendar.current.dateComponents([.day], from: now, to: date).day ?? .max
+        return daysAway < 6
+            ? date.formatted(.dateTime.weekday(.abbreviated))
+            : date.formatted(.dateTime.month(.defaultDigits).day())
+    }
+
+    /// e.g. "Sat 3:30 PM", or "11/29 TBD" before a time is announced.
+    func compactKickoffLine(now: Date = .now) -> String {
+        let time = hasConfirmedTime ? date.formatted(.dateTime.hour().minute()) : "TBD"
+        return "\(compactDay(now: now)) \(time)"
+    }
+
     /// Games in the past that never finished (postponed, canceled) should not
     /// be offered as "next up", but unplayed future games should.
     var isUpcoming: Bool {

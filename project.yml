@@ -15,7 +15,7 @@ settings:
   base:
     SWIFT_VERSION: "6.0"
     MARKETING_VERSION: "1.0"
-    CURRENT_PROJECT_VERSION: "11"
+    CURRENT_PROJECT_VERSION: "12"
     DEAD_CODE_STRIPPING: YES
     # Ad-hoc ("Sign to Run Locally") so the project builds and runs without a
     # provisioning profile. That covers the Mac and the iOS Simulator; a real

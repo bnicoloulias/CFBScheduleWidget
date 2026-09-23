@@ -15,7 +15,16 @@ struct CollegeFootballScheduleWidget: Widget {
         }
         .configurationDisplayName("College Football Schedule")
         .description("The next game for the team you pick, with scores and what's coming up.")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+        .supportedFamilies(Self.families)
+    }
+
+    /// The Lock Screen families exist only on iOS.
+    private static var families: [WidgetFamily] {
+        #if os(iOS)
+        [.systemSmall, .systemMedium, .systemLarge, .accessoryRectangular, .accessoryInline, .accessoryCircular]
+        #else
+        [.systemSmall, .systemMedium, .systemLarge]
+        #endif
     }
 }
 

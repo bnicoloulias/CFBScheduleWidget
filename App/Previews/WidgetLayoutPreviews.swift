@@ -46,4 +46,24 @@ enum WidgetLayoutPreviews {
         ScheduleUnavailableView(message: "The Internet connection appears to be offline.")
     }
 }
+#Preview("Lock Screen") {
+    // Approximates the Lock Screen's vibrant rendering: white on a dark
+    // wallpaper, no team colour.
+    let snapshot = WidgetLayoutPreviews.snapshot(upcoming: 0, recent: 0)
+
+    VStack(spacing: 16) {
+        InlineScheduleView(snapshot: snapshot)
+            .font(.subheadline)
+        HStack(spacing: 16) {
+            RectangularScheduleView(snapshot: snapshot)
+                .frame(width: 160, height: 72)
+            CircularScheduleView(snapshot: snapshot)
+                .frame(width: 72, height: 72)
+                .background(.white.opacity(0.15), in: .circle)
+        }
+    }
+    .foregroundStyle(.white)
+    .padding(24)
+    .background(.black.gradient)
+}
 #endif

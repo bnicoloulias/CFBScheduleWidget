@@ -17,6 +17,48 @@ struct ScheduleWidgetEntryView: View {
     private var theme: TeamTheme { entry.snapshot?.theme ?? .fallback }
 
     var body: some View {
+        #if os(iOS)
+        switch family {
+        case .accessoryRectangular, .accessoryInline, .accessoryCircular:
+            accessoryBody
+        default:
+            systemBody
+        }
+        #else
+        systemBody
+        #endif
+    }
+
+    #if os(iOS)
+    /// Lock Screen families. No intent button: a Lock Screen tap always opens
+    /// the app, and there is no team colour to paint behind them.
+    @ViewBuilder private var accessoryBody: some View {
+        Group {
+            if let snapshot = entry.snapshot {
+                switch family {
+                case .accessoryInline:
+                    InlineScheduleView(snapshot: snapshot)
+                case .accessoryCircular:
+                    CircularScheduleView(snapshot: snapshot)
+                default:
+                    RectangularScheduleView(snapshot: snapshot)
+                }
+            } else if family == .accessoryCircular {
+                Image(systemName: "wifi.exclamationmark")
+                    .accessibilityLabel("Schedule unavailable")
+            } else {
+                Text("Schedule unavailable")
+            }
+        }
+        .containerBackground(for: .widget) {
+            if family == .accessoryCircular {
+                AccessoryWidgetBackground()
+            }
+        }
+    }
+    #endif
+
+    @ViewBuilder private var systemBody: some View {
         // Decoded once here, not inside every TeamLogoView body.
         let logos = LogoImages.decode(entry.logos)
 
