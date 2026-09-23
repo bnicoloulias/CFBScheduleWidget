@@ -10,3 +10,6 @@ App/Info.plist
 App/CollegeFootballSchedule.entitlements
 Widget/Info.plist
 Widget/CollegeFootballScheduleWidget.entitlements
+
+# Per-developer signing team; see Config/Signing.xcconfig.
+Config/Local.xcconfig

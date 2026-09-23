@@ -7,7 +7,11 @@ import SwiftUI
 enum LogoImages {
     static func decode(_ logos: [String: Data]) -> [String: Image] {
         logos.compactMapValues { data in
+            #if canImport(UIKit)
+            UIImage(data: data).map(Image.init(uiImage:))
+            #else
             NSImage(data: data).map(Image.init(nsImage:))
+            #endif
         }
     }
 }

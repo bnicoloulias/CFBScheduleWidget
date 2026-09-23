@@ -33,12 +33,16 @@ enum PreviewLogos {
         .frame(width: 128, height: 128)
 
         let renderer = ImageRenderer(content: badge)
+        #if canImport(UIKit)
+        return renderer.uiImage?.pngData()
+        #else
         guard let image = renderer.nsImage,
             let tiff = image.tiffRepresentation,
             let bitmap = NSBitmapImageRep(data: tiff)
         else { return nil }
 
         return bitmap.representation(using: .png, properties: [:])
+        #endif
     }
 }
 #endif

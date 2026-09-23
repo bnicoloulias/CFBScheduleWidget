@@ -1,0 +1,9 @@
+// Per-developer signing. A real iPhone needs a development team, and that
+// team is yours, not the repo's: put it in Config/Local.xcconfig (gitignored),
+//
+//     DEVELOPMENT_TEAM_ID = ABCDE12345
+//
+// Without it the Mac and Simulator builds still work, ad-hoc signed.
+DEVELOPMENT_TEAM_ID =
+
+#include? "Local.xcconfig"
