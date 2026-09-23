@@ -1,12 +1,15 @@
 import SwiftUI
 
-/// Kickoff day and time, plus the broadcast network once one is assigned.
+/// Kickoff day and time, the venue, plus the broadcast network once one is
+/// assigned.
 struct KickoffLineView: View {
     let game: Game
+    /// Off when the surrounding view already shows the venue.
+    var showsVenue = true
 
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
+            HStack(spacing: 4) {
                 Text(game.date, format: .dateTime.weekday(.abbreviated).month(.abbreviated).day())
                 Text(verbatim: "·")
                     .foregroundStyle(.tertiary)
@@ -20,6 +23,12 @@ struct KickoffLineView: View {
             }
             .font(.subheadline)
             .bold()
+
+            if showsVenue, let venueName = game.venueName {
+                Text(venueName)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
 
             if let network = game.network {
                 Text(network)

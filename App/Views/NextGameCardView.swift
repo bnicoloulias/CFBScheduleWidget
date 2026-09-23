@@ -19,7 +19,12 @@ struct NextGameCardView: View {
                     .font(.title2)
                     .bold()
 
-                GameTimingView(game: game, isLive: isLive, teamAbbreviation: teamAbbreviation)
+                GameTimingView(
+                    game: game,
+                    isLive: isLive,
+                    teamAbbreviation: teamAbbreviation,
+                    showsVenue: false
+                )
 
                 if let venue = game.venueName {
                     Label(venue, systemImage: "mappin.and.ellipse")
