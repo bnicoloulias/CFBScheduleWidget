@@ -28,8 +28,5 @@ struct CollegeFootballScheduleWidget: Widget {
     }
 }
 
-// No previews in this file. Xcode hosts a preview in the process that owns the
-// file, and macOS cannot launch an app extension as a preview host, so any
-// preview in this target fails with "This platform does not support previewing
-// widgets". The layouts are previewed from App/Previews/WidgetLayoutPreviews.swift,
-// which the app target owns.
+// Previews: WidgetPreviews.swift for iPhone, where WidgetKit can host them;
+// App/Previews/WidgetLayoutPreviews.swift for the Mac, where it cannot.

@@ -752,10 +752,20 @@ previews in `CollegeFootballSchedule.app` rather than the extension.
 - **`WidgetPreviewFrame.swift`** — applies the padding, gradient, fixed size and
   corner radius WidgetKit would, so the canvas shows the real thing rather than
   a loose view.
-- **`PreviewLogos.swift`** — draws grey lettered badges to stand in for team
-  logos. The real ones are fetched over the network into a timeline entry, which
-  a preview cannot do synchronously; without these every preview would be
-  fallback football glyphs.
+
+`Shared/Previews/PreviewLogos.swift` draws grey lettered badges to stand in for
+team logos. The real ones are fetched over the network into a timeline entry,
+which a preview cannot do synchronously; without these every preview would be
+fallback football glyphs. It sits in `Shared/` because the iPhone previews in
+the widget target use it too.
+
+### `Widget/WidgetPreviews.swift`
+
+Real WidgetKit previews (`#Preview(as: .systemSmall)` and friends) for every
+family, including the Lock Screen ones, over a timeline you can scrub: days
+before kickoff, mid-game, the day after, and offline. They are `#if os(iOS)`
+and render only with an iPhone destination selected in the canvas, since macOS
+cannot host a widget preview; the Mac keeps the plain-view previews above.
 
 ---
 

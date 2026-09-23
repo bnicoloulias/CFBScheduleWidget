@@ -71,9 +71,12 @@ real team ID. The app and widget each keep their own cache.
 - Logic that needs tests goes in `Shared/`; the test bundle is hosted by the app
   and can't reach extension types (`Shared/Models/WidgetRefreshPolicy.swift` is
   the example).
-- `#Preview` doesn't work in `Widget/` ("This platform does not support
-  previewing widgets"). Layout previews go in
-  `App/Previews/WidgetLayoutPreviews.swift`.
+- Widget previews exist twice. `Widget/WidgetPreviews.swift` holds real
+  `#Preview(as:)` WidgetKit previews, iOS-only: they render only with an
+  iPhone destination in the canvas, because macOS can't host a widget preview
+  ("This platform does not support previewing widgets"). Mac layouts are
+  previewed as plain views from `App/Previews/WidgetLayoutPreviews.swift`.
+  Preview-only helpers both use (`PreviewLogos`) go in `Shared/Previews/`.
 - Log with `os.Logger` (subsystem `com.bobbynicoloulias.CollegeFootballSchedule`), not
   `print`. To see widget-process output, run the `CollegeFootballScheduleWidget`
   scheme and pick CollegeFootballSchedule as the host app.
