@@ -13,11 +13,9 @@ struct MediumScheduleView: View {
                 FeaturedSectionView(snapshot: snapshot, logos: logos)
             }
 
-            Divider()
-
             // Falls back to results in the offseason; the left column's
             // "Season complete" heading supplies the context.
-            VStack(alignment: .leading, spacing: 4) {
+            Grid(alignment: .leading, horizontalSpacing: 8, verticalSpacing: 8) {
                 ForEach(queue.isEmpty ? snapshot.recent : queue) { game in
                     GameRowView(game: game, logo: logos[game.opponent.id])
                 }

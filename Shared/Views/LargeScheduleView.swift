@@ -14,17 +14,25 @@ struct LargeScheduleView: View {
 
             FeaturedSectionView(snapshot: snapshot, logos: logos)
 
-            if !queue.isEmpty {
-                SectionLabel(text: "Upcoming")
-                ForEach(queue) { game in
-                    GameRowView(game: game, logo: logos[game.opponent.id])
+            Grid(alignment: .leading, horizontalSpacing: 8, verticalSpacing: 8) {
+                if !queue.isEmpty {
+                    GridRow {
+                        SectionLabel(text: "Upcoming")
+                            .gridCellColumns(2)
+                    }
+                    ForEach(queue) { game in
+                        GameRowView(game: game, logo: logos[game.opponent.id])
+                    }
                 }
-            }
 
-            if !results.isEmpty {
-                SectionLabel(text: "Recent")
-                ForEach(results) { game in
-                    GameRowView(game: game, logo: logos[game.opponent.id])
+                if !results.isEmpty {
+                    GridRow {
+                        SectionLabel(text: "Recent")
+                            .gridCellColumns(2)
+                    }
+                    ForEach(results) { game in
+                        GameRowView(game: game, logo: logos[game.opponent.id])
+                    }
                 }
             }
 

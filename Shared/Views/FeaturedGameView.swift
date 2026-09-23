@@ -21,20 +21,23 @@ struct FeaturedGameView: View {
         } else {
             parts.append("\(game.date.formatted(date: .abbreviated, time: .omitted)), time to be announced")
         }
+        if !isLive, !game.status.isComplete, let venue = game.venueName {
+            parts.append("at \(venue)")
+        }
         if let network = game.network { parts.append("on \(network)") }
         return parts.joined(separator: ", ")
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 12) {
             if showsStatus {
                 GameStatusPill(game: game, isLive: isLive)
             }
 
-            HStack(spacing: 8) {
+            HStack {
                 TeamLogoView(image: logo, teamName: game.opponent.fullName, size: AppTheme.logoSize)
 
-                VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading) {
                     Text(game.matchupLine)
                         .font(.headline)
                         .lineLimit(2)
