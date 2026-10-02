@@ -1,4 +1,4 @@
-# College Football Schedule
+# CFB Schedule Widget
 
 Widgets for a college football team's schedule — on the Mac desktop, the iPhone
 Home Screen, and the iPhone Lock Screen — plus a small host app that shows the
@@ -157,17 +157,17 @@ On the Mac:
 
 1. Right-click the desktop and choose **Edit Widgets**, or click the date in the
    menu bar to open Notification Center and scroll to **Edit Widgets**.
-2. Find **College Football Schedule** and drag the size you want onto the desktop.
-3. Right-click the widget and choose **Edit "College Football Schedule"** to pick a
+2. Find **CFB Schedule Widget** and drag the size you want onto the desktop.
+3. Right-click the widget and choose **Edit "CFB Schedule Widget"** to pick a
    team.
 
 On iPhone:
 
 1. Touch and hold an empty part of the Home Screen, tap **Edit → Add Widget**,
-   find **College Football Schedule**, and add the size you want.
+   find **CFB Schedule Widget**, and add the size you want.
 2. For the Lock Screen, touch and hold the Lock Screen, tap **Customize → Lock
-   Screen**, then tap the widget area and choose a College Football Schedule
-   widget.
+   Screen**, then tap the widget area and choose one of the **CFB Schedule
+   Widget** sizes.
 3. Touch and hold the widget and choose **Edit Widget** to pick a team.
 
 The troubleshooting below is for the Mac, where LaunchServices and `chronod`

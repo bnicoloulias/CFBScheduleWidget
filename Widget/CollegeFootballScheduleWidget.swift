@@ -13,7 +13,7 @@ struct CollegeFootballScheduleWidget: Widget {
         ) { entry in
             ScheduleWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("College Football Schedule")
+        .configurationDisplayName("CFB Schedule Widget")
         .description("The next game for the team you pick, with scores and what's coming up.")
         .supportedFamilies(Self.families)
     }
