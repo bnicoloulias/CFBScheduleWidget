@@ -9,28 +9,49 @@ struct KickoffLineView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            HStack(spacing: 4) {
-                Text(game.date, format: .dateTime.weekday(.abbreviated).month(.abbreviated).day())
-                Text(verbatim: "·")
-                    .foregroundStyle(.tertiary)
-                    .accessibilityHidden(true)
-                if game.hasConfirmedTime {
-                    Text(game.date, format: .dateTime.hour().minute())
-                } else {
-                    Text("TBD")
-                        .foregroundStyle(.secondary)
-                }
+            #if os(iOS)
+            // iPhone's larger type leaves the Large widget short of height,
+            // so the network joins the kickoff line wherever it fits.
+            ViewThatFits(in: .horizontal) {
+                kickoffLine(includesNetwork: true)
+                kickoffLine(includesNetwork: false)
             }
-            .font(.subheadline)
-            .bold()
+            #else
+            kickoffLine(includesNetwork: false)
+            #endif
 
             if showsVenue, let venueName = game.venueName {
                 Text(venueName)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+        }
+    }
 
-            if let network = game.network {
+    /// Without the network inline, it gets a badge on its own line.
+    @ViewBuilder private func kickoffLine(includesNetwork: Bool) -> some View {
+        VStack(alignment: .leading) {
+            HStack(spacing: 4) {
+                Text(game.date, format: .dateTime.weekday(.abbreviated).month(.abbreviated).day())
+                separator
+                if game.hasConfirmedTime {
+                    Text(game.date, format: .dateTime.hour().minute())
+                } else {
+                    Text("TBD")
+                        .foregroundStyle(.secondary)
+                }
+                if includesNetwork, let network = game.network {
+                    separator
+                    Text(network)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .font(.subheadline)
+            .bold()
+            // Wrapping would always "fit" and defeat ViewThatFits.
+            .lineLimit(includesNetwork ? 1 : nil)
+
+            if !includesNetwork, let network = game.network {
                 Text(network)
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -39,5 +60,11 @@ struct KickoffLineView: View {
                     .background(.quaternary, in: .rect(cornerRadius: 4))
             }
         }
+    }
+
+    private var separator: some View {
+        Text(verbatim: "·")
+            .foregroundStyle(.tertiary)
+            .accessibilityHidden(true)
     }
 }

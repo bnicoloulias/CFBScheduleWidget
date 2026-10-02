@@ -15,6 +15,9 @@ struct LiveGameLineView: View {
                 .monospacedDigit()
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
+                // Only width may shrink it; a layout short of height would
+                // otherwise take it out of the score first.
+                .fixedSize(horizontal: false, vertical: true)
         }
 
         if let detail = game.statusDetail {

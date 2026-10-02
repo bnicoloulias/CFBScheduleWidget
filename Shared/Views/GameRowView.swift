@@ -5,6 +5,9 @@ import SwiftUI
 struct GameRowView: View {
     let game: Game
     let logo: Image?
+    /// Date and result on one line instead of stacked, for lists that are
+    /// short of height rather than width.
+    var showsDateInline = false
 
     var body: some View {
         GridRow {
@@ -16,16 +19,34 @@ struct GameRowView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            VStack(alignment: .leading) {
-                Text(game.date, format: .dateTime.month(.abbreviated).day())
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                Text(game.resultOrKickoffLine)
-                    .monospacedDigit()
-                    .foregroundStyle(game.result.map(AppTheme.resultColor) ?? .secondary)
+            if showsDateInline {
+                HStack(alignment: .firstTextBaseline, spacing: 4) {
+                    date
+                    Text(verbatim: "·")
+                        .foregroundStyle(.tertiary)
+                        .accessibilityHidden(true)
+                    resultOrKickoff
+                }
+            } else {
+                VStack(alignment: .leading) {
+                    date
+                    resultOrKickoff
+                }
             }
         }
         .font(.subheadline)
         .accessibilityElement(children: .combine)
+    }
+
+    private var date: some View {
+        Text(game.date, format: .dateTime.month(.abbreviated).day())
+            .font(.caption)
+            .foregroundStyle(.secondary)
+    }
+
+    private var resultOrKickoff: some View {
+        Text(game.resultOrKickoffLine)
+            .monospacedDigit()
+            .foregroundStyle(game.result.map(AppTheme.resultColor) ?? .secondary)
     }
 }
