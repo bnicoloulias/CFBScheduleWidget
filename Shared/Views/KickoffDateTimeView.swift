@@ -32,8 +32,7 @@ struct KickoffDateTimeView: View {
                 Text(network)
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                    .padding(.horizontal, 4)
-                    .padding(.vertical, 2)
+                    .padding(4)
                     .background(.quaternary, in: .rect(cornerRadius: 4))
             }
         }

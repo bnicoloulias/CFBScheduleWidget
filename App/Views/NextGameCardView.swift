@@ -13,7 +13,7 @@ struct NextGameCardView: View {
             AsyncTeamLogoView(teamID: game.opponent.id, size: 56)
 
             VStack(alignment: .leading, spacing: 4) {
-                GameStatusPill(game: game, isLive: isLive)
+                GameStatusRowView(game: game, isLive: isLive)
 
                 Text(game.matchupLine)
                     .font(.title2)

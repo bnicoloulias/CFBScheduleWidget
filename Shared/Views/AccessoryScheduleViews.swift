@@ -17,10 +17,19 @@ struct RectangularScheduleView: View {
                     .widgetAccentable()
 
                 if snapshot.isFeaturedLive {
-                    if let score = game.liveScoreLine(teamAbbreviation: snapshot.teamAbbreviation) {
-                        Text(score)
-                            .monospacedDigit()
+                    // The narrower form rather than shrinking the text.
+                    ViewThatFits(in: .horizontal) {
+                        if let score = game.liveScoreLine(teamAbbreviation: snapshot.teamAbbreviation) {
+                            Text(score)
+                        }
+                        if let score = game.liveScoreLine(
+                            teamAbbreviation: snapshot.teamAbbreviation, isCompact: true)
+                        {
+                            Text(score)
+                        }
                     }
+                    .monospacedDigit()
+                    .contentTransition(.numericText())
                     if let detail = game.statusDetail {
                         Text(detail)
                             .foregroundStyle(.secondary)
@@ -47,7 +56,6 @@ struct RectangularScheduleView: View {
             }
         }
         .lineLimit(1)
-        .minimumScaleFactor(0.8)
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .combine)
     }
@@ -92,6 +100,7 @@ struct CircularScheduleView: View {
                     {
                         Text(verbatim: "\(teamScore)-\(opponentScore)")
                             .monospacedDigit()
+                            .contentTransition(.numericText())
                     } else if let result = game.result {
                         Text(result.letter)
                     } else {
@@ -106,7 +115,6 @@ struct CircularScheduleView: View {
             }
         }
         .lineLimit(1)
-        .minimumScaleFactor(0.6)
         .padding(4)
         .accessibilityElement(children: .combine)
     }

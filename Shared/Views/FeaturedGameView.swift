@@ -33,7 +33,7 @@ struct FeaturedGameView: View {
     var body: some View {
         VStack(alignment: .leading) {
             if showsStatus {
-                GameStatusPill(game: game, isLive: isLive)
+                GameStatusRowView(game: game, isLive: isLive)
             }
 
             HStack {

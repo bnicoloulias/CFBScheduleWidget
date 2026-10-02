@@ -1,29 +1,36 @@
 import SwiftUI
 
-/// Score and clock while a game is being played.
+/// The score while a game is being played. The clock sits beside the LIVE
+/// pill, in `GameStatusRowView`.
 struct LiveGameLineView: View {
     let game: Game
     let teamAbbreviation: String
 
     var body: some View {
-        if let scoreLine = game.liveScoreLine(teamAbbreviation: teamAbbreviation) {
-            // Shrink rather than truncate: the truncated end is the followed
-            // team's own score, and iPhone's larger type overflows the Medium
-            // widget's half-width column with a four-letter abbreviation.
-            Text(scoreLine)
-                .font(.headline)
-                .monospacedDigit()
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-                // Only width may shrink it; a layout short of height would
-                // otherwise take it out of the score first.
-                .fixedSize(horizontal: false, vertical: true)
+        // Narrower forms rather than shrinking text: the full line is wider
+        // than Small's column, and wider than Medium's on smaller iPhones.
+        ViewThatFits(in: .horizontal) {
+            if let line = game.liveScoreLine(teamAbbreviation: teamAbbreviation) {
+                Text(line)
+                    .font(.headline)
+            }
+            if let line = game.liveScoreLine(teamAbbreviation: teamAbbreviation, isCompact: true) {
+                Text(line)
+                    .font(.subheadline)
+                    .bold()
+            }
+            if let rows = game.liveScoreRows(teamAbbreviation: teamAbbreviation) {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(rows.opponent)
+                    Text(rows.team)
+                }
+                .font(.subheadline)
+                .bold()
+            }
         }
-
-        if let detail = game.statusDetail {
-            Text(detail)
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
+        .lineLimit(1)
+        .monospacedDigit()
+        // Rolls the digits when a new timeline entry brings a new score.
+        .contentTransition(.numericText())
     }
 }

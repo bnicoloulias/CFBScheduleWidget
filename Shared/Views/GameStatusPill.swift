@@ -59,8 +59,8 @@ struct GameStatusPill: View {
         if renderingMode == .fullColor {
             label
                 .foregroundStyle(labelColor)
-                .padding(.horizontal, 6)
-                .padding(.vertical, 2)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
                 .background(tint, in: .capsule)
         } else {
             label

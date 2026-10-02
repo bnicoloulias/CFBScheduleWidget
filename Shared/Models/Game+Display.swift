@@ -37,11 +37,20 @@ extension Game {
         return "TBD"
     }
 
-    /// e.g. "MICH 7 — 14 OSU", opponent first as on a scoreboard. `nil` until
-    /// both scores are known.
-    func liveScoreLine(teamAbbreviation: String) -> String? {
+    /// e.g. "MICH 7 — 14 OSU", opponent first as on a scoreboard; `isCompact`
+    /// gives "MICH 7–14 OSU" for a narrow column. `nil` until both scores are
+    /// known.
+    func liveScoreLine(teamAbbreviation: String, isCompact: Bool = false) -> String? {
         guard let teamScore, let opponentScore else { return nil }
-        return "\(opponent.abbreviation) \(opponentScore) — \(teamScore) \(teamAbbreviation)"
+        let separator = isCompact ? "–" : " — "
+        return "\(opponent.abbreviation) \(opponentScore)\(separator)\(teamScore) \(teamAbbreviation)"
+    }
+
+    /// The live score as two scoreboard rows, e.g. ("MICH 7", "OSU 14"), for
+    /// a column too narrow for one line. `nil` until both scores are known.
+    func liveScoreRows(teamAbbreviation: String) -> (opponent: String, team: String)? {
+        guard let teamScore, let opponentScore else { return nil }
+        return ("\(opponent.abbreviation) \(opponentScore)", "\(teamAbbreviation) \(teamScore)")
     }
 
     /// The kickoff day in as few characters as a Lock Screen widget allows:

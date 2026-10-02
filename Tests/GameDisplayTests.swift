@@ -30,4 +30,17 @@ struct GameDisplayTests {
         #expect(line.hasPrefix(game.opponent.abbreviation))
         #expect(line.hasSuffix("OSU"))
     }
+
+    @Test func keepsTheScoreboardOrderInTheNarrowForms() throws {
+        let game = try #require(try Fixture.schedule().games.first { $0.teamScore != nil })
+        let teamScore = try #require(game.teamScore)
+        let opponentScore = try #require(game.opponentScore)
+
+        let compact = try #require(game.liveScoreLine(teamAbbreviation: "OSU", isCompact: true))
+        let rows = try #require(game.liveScoreRows(teamAbbreviation: "OSU"))
+
+        #expect(compact == "\(game.opponent.abbreviation) \(opponentScore)–\(teamScore) OSU")
+        #expect(rows.opponent == "\(game.opponent.abbreviation) \(opponentScore)")
+        #expect(rows.team == "OSU \(teamScore)")
+    }
 }

@@ -25,9 +25,9 @@ enum PreviewLogos {
             Circle()
                 .fill(AppTheme.neutral.gradient)
             Text(text.prefix(4))
-                .font(.system(size: 30, weight: .heavy, design: .rounded))
+                // Four letters at most, which fit the badge at this size.
+                .font(.system(size: 30, weight: .heavy))
                 .foregroundStyle(.white)
-                .minimumScaleFactor(0.5)
                 .padding(8)
         }
         .frame(width: 128, height: 128)
