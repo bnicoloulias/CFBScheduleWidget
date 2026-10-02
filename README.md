@@ -6,6 +6,8 @@ full season. Pick any of the 762 teams ESPN publishes, per widget and
 independently in the app. Tapping a Home Screen or desktop widget opens that
 team's page on ESPN.
 
+![The Large, Small and Medium widgets on iPhone, following Ohio State before a game at Iowa](docs/images/ios-widgets.png)
+
 > This is an independent hobby project. It is not affiliated with, endorsed by,
 > or sponsored by the NCAA, ESPN, or any school. Team names, logos, and schedule
 > data belong to their respective owners.
