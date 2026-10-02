@@ -11,7 +11,7 @@ struct FeaturedGameView: View {
     let teamAbbreviation: String
     /// Off when the surrounding view already says what state the game is in.
     var showsStatus = true
-    /// Shortens the kickoff line; see `KickoffLineView.isCompact`.
+    /// Uses `CompactKickoffLineView` for the kickoff line.
     var isCompact = false
 
     private var accessibilityDescription: String {

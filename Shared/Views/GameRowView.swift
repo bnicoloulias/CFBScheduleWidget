@@ -19,34 +19,9 @@ struct GameRowView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            if showsDateInline {
-                HStack(alignment: .firstTextBaseline, spacing: 4) {
-                    date
-                    Text(verbatim: "·")
-                        .foregroundStyle(.tertiary)
-                        .accessibilityHidden(true)
-                    resultOrKickoff
-                }
-            } else {
-                VStack(alignment: .leading) {
-                    date
-                    resultOrKickoff
-                }
-            }
+            GameRowTimingView(game: game, isInline: showsDateInline)
         }
         .font(.subheadline)
         .accessibilityElement(children: .combine)
-    }
-
-    private var date: some View {
-        Text(game.date, format: .dateTime.month(.abbreviated).day())
-            .font(.caption)
-            .foregroundStyle(.secondary)
-    }
-
-    private var resultOrKickoff: some View {
-        Text(game.resultOrKickoffLine)
-            .monospacedDigit()
-            .foregroundStyle(game.result.map(AppTheme.resultColor) ?? .secondary)
     }
 }

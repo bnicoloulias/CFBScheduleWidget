@@ -4,7 +4,7 @@ import SwiftUI
 struct FeaturedSectionView: View {
     let snapshot: ScheduleSnapshot
     let logos: [String: Image]
-    /// Shortens the kickoff line; see `KickoffLineView.isCompact`.
+    /// Uses `CompactKickoffLineView` for the kickoff line.
     var isCompact = false
 
     var body: some View {

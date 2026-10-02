@@ -12,6 +12,14 @@ enum AppTheme {
     static let logoSize: Double = 34
     static let smallLogoSize: Double = 20
 
+    #if os(iOS)
+    /// iOS text styles run much larger than macOS's, so on iPhone the widgets
+    /// shorten or drop secondary detail to fit.
+    static let prefersCompactWidgets = true
+    #else
+    static let prefersCompactWidgets = false
+    #endif
+
     static func resultColor(_ result: GameResult) -> Color {
         switch result {
         case .win: .green
