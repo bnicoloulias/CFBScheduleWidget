@@ -13,7 +13,10 @@ struct StackedGameRowView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text(game.matchupLine)
                     .lineLimit(1)
+                // The time or result matches the date's size, so the line
+                // reads as one caption beneath the opponent.
                 GameRowTimingView(game: game, isInline: true)
+                    .font(.caption)
             }
         }
         .font(.subheadline)
