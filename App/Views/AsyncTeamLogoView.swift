@@ -16,7 +16,7 @@ struct AsyncTeamLogoView: View {
                 .resizable()
                 .scaledToFit()
                 .foregroundStyle(.tertiary)
-                .padding(size * 0.1)
+                .padding(size * AppTheme.logoGlyphInset)
         }
         .frame(width: size, height: size)
         .accessibilityHidden(true)

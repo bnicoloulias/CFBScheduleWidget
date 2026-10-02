@@ -5,8 +5,8 @@ struct ScheduleRowView: View {
     let game: Game
 
     var body: some View {
-        HStack(spacing: 12) {
-            AsyncTeamLogoView(teamID: game.opponent.id, size: 28)
+        HStack(spacing: DrawingConstants.spacing) {
+            AsyncTeamLogoView(teamID: game.opponent.id, size: DrawingConstants.logoSize)
 
             VStack(alignment: .leading, spacing: 0) {
                 Text(game.matchupLine)
@@ -15,7 +15,7 @@ struct ScheduleRowView: View {
                     .foregroundStyle(.secondary)
             }
 
-            Spacer(minLength: 8)
+            Spacer(minLength: DrawingConstants.minimumGap)
 
             VStack(alignment: .trailing, spacing: 0) {
                 Text(game.resultOrKickoffLine)
@@ -29,5 +29,11 @@ struct ScheduleRowView: View {
             }
         }
         .accessibilityElement(children: .combine)
+    }
+
+    private enum DrawingConstants {
+        static let spacing: Double = 12
+        static let logoSize: Double = 28
+        static let minimumGap: Double = 8
     }
 }

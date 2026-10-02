@@ -17,7 +17,7 @@ struct TeamLogoView: View {
                     .resizable()
                     .scaledToFit()
                     .foregroundStyle(.secondary)
-                    .padding(size * 0.1)
+                    .padding(size * AppTheme.logoGlyphInset)
             }
         }
         .frame(width: size, height: size)

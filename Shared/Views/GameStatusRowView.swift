@@ -6,7 +6,7 @@ struct GameStatusRowView: View {
     let isLive: Bool
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: DrawingConstants.spacing) {
             GameStatusPill(game: game, isLive: isLive)
 
             if isLive, let detail = game.statusDetail {
@@ -16,5 +16,9 @@ struct GameStatusRowView: View {
                     .lineLimit(1)
             }
         }
+    }
+
+    private enum DrawingConstants {
+        static let spacing: Double = 8
     }
 }

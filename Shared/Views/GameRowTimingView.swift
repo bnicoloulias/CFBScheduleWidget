@@ -15,7 +15,7 @@ struct GameRowTimingView: View {
             .foregroundStyle(game.result.map(AppTheme.resultColor) ?? .secondary)
 
         if isInline {
-            HStack(alignment: .firstTextBaseline, spacing: 4) {
+            HStack(alignment: .firstTextBaseline, spacing: DrawingConstants.inlineSpacing) {
                 date
                 MiddleDotSeparator()
                 resultOrKickoff
@@ -26,5 +26,9 @@ struct GameRowTimingView: View {
                 resultOrKickoff
             }
         }
+    }
+
+    private enum DrawingConstants {
+        static let inlineSpacing: Double = 4
     }
 }

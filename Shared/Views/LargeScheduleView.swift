@@ -7,7 +7,9 @@ struct LargeScheduleView: View {
 
     /// iPhone's larger type fits one result, and only on one line per row.
     private var results: [Game] {
-        Array(snapshot.recent.prefix(AppTheme.prefersCompactWidgets ? 1 : 2))
+        let rows =
+            AppTheme.prefersCompactWidgets ? DrawingConstants.compactResultRows : DrawingConstants.resultRows
+        return Array(snapshot.recent.prefix(rows))
     }
 
     var body: some View {
@@ -17,5 +19,10 @@ struct LargeScheduleView: View {
             LargeScheduleContent(snapshot: snapshot, logos: logos, results: results)
             LargeScheduleContent(snapshot: snapshot, logos: logos, results: [])
         }
+    }
+
+    private enum DrawingConstants {
+        static let resultRows: Int = 2
+        static let compactResultRows: Int = 1
     }
 }

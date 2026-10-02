@@ -37,7 +37,7 @@ struct TeamPickerView: View {
                         } label: {
                             HStack {
                                 Text(entry.name)
-                                Spacer(minLength: 8)
+                                Spacer(minLength: DrawingConstants.minimumGap)
                                 if entry.id == teamID {
                                     Image(systemName: "checkmark")
                                         .foregroundStyle(.tint)
@@ -61,11 +61,17 @@ struct TeamPickerView: View {
                 }
             }
         }
-        .frame(minWidth: 340, minHeight: 440)
+        .frame(minWidth: DrawingConstants.minimumWidth, minHeight: DrawingConstants.minimumHeight)
         .task {
             entries = await TeamDirectory.shared.all()
             isLoading = false
         }
+    }
+
+    private enum DrawingConstants {
+        static let minimumGap: Double = 8
+        static let minimumWidth: Double = 340
+        static let minimumHeight: Double = 440
     }
 }
 

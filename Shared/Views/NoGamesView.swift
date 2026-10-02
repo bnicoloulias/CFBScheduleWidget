@@ -5,12 +5,16 @@ struct NoGamesView: View {
     let seasonLabel: String
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: DrawingConstants.spacing) {
             SectionLabel(text: "No games yet")
             Text("The \(seasonLabel) schedule hasn't been posted.")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
         }
         .accessibilityElement(children: .combine)
+    }
+
+    private enum DrawingConstants {
+        static let spacing: Double = 4
     }
 }

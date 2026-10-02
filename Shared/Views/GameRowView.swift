@@ -15,7 +15,7 @@ struct GameRowView: View {
                 TeamLogoView(image: logo, teamName: game.opponent.fullName, size: AppTheme.smallLogoSize)
 
                 Text(game.matchupLine)
-                    .lineLimit(2)
+                    .lineLimit(DrawingConstants.matchupLineLimit)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -23,5 +23,9 @@ struct GameRowView: View {
         }
         .font(.subheadline)
         .accessibilityElement(children: .combine)
+    }
+
+    private enum DrawingConstants {
+        static let matchupLineLimit: Int = 2
     }
 }

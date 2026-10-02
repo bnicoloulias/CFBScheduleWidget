@@ -9,7 +9,7 @@ struct CompactKickoffLineView: View {
     var body: some View {
         ViewThatFits(in: .horizontal) {
             if let network = game.network {
-                HStack(spacing: 4) {
+                HStack(spacing: DrawingConstants.spacing) {
                     CompactKickoffTimeView(game: game)
                     MiddleDotSeparator()
                     Text(network)
@@ -21,5 +21,9 @@ struct CompactKickoffLineView: View {
         .font(.subheadline)
         .bold()
         .lineLimit(1)
+    }
+
+    private enum DrawingConstants {
+        static let spacing: Double = 4
     }
 }

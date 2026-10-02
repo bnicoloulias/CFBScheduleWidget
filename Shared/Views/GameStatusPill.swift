@@ -59,12 +59,17 @@ struct GameStatusPill: View {
         if renderingMode == .fullColor {
             label
                 .foregroundStyle(labelColor)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
+                .padding(.horizontal, DrawingConstants.horizontalPadding)
+                .padding(.vertical, DrawingConstants.verticalPadding)
                 .background(tint, in: .capsule)
         } else {
             label
                 .foregroundStyle(.secondary)
         }
+    }
+
+    private enum DrawingConstants {
+        static let horizontalPadding: Double = 8
+        static let verticalPadding: Double = 4
     }
 }

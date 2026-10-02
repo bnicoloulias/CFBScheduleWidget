@@ -6,7 +6,7 @@ struct ScheduleHeaderView: View {
     let logo: Image?
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: DrawingConstants.spacing) {
             TeamLogoView(image: logo, teamName: snapshot.teamName, size: AppTheme.logoSize)
 
             VStack(alignment: .leading, spacing: 0) {
@@ -22,5 +22,9 @@ struct ScheduleHeaderView: View {
             }
         }
         .accessibilityElement(children: .combine)
+    }
+
+    private enum DrawingConstants {
+        static let spacing: Double = 8
     }
 }

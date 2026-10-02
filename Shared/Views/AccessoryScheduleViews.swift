@@ -115,7 +115,11 @@ struct CircularScheduleView: View {
             }
         }
         .lineLimit(1)
-        .padding(4)
+        .padding(DrawingConstants.padding)
         .accessibilityElement(children: .combine)
+    }
+
+    private enum DrawingConstants {
+        static let padding: Double = 4
     }
 }

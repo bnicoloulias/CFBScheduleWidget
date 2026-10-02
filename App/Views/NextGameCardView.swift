@@ -9,10 +9,10 @@ struct NextGameCardView: View {
     let teamAbbreviation: String
 
     var body: some View {
-        HStack(spacing: 16) {
-            AsyncTeamLogoView(teamID: game.opponent.id, size: 56)
+        HStack(spacing: DrawingConstants.spacing) {
+            AsyncTeamLogoView(teamID: game.opponent.id, size: DrawingConstants.logoSize)
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: DrawingConstants.textSpacing) {
                 GameStatusRowView(game: game, isLive: isLive)
 
                 Text(game.matchupLine)
@@ -43,5 +43,11 @@ struct NextGameCardView: View {
             }
             .clipShape(.rect(cornerRadius: AppTheme.cornerRadius))
         }
+    }
+
+    private enum DrawingConstants {
+        static let spacing: Double = 16
+        static let logoSize: Double = 56
+        static let textSpacing: Double = 4
     }
 }

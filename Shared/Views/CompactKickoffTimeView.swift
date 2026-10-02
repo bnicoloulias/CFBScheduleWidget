@@ -6,12 +6,16 @@ struct CompactKickoffTimeView: View {
     let game: Game
 
     var body: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: DrawingConstants.spacing) {
             Text(game.compactDay())
             // Dimmed like KickoffLineView's, so an unannounced time does not
             // read as a confirmed one.
             Text(game.hasConfirmedTime ? game.date.formatted(.dateTime.hour().minute()) : "TBD")
                 .foregroundStyle(game.hasConfirmedTime ? .primary : .secondary)
         }
+    }
+
+    private enum DrawingConstants {
+        static let spacing: Double = 4
     }
 }

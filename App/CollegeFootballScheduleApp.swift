@@ -9,7 +9,7 @@ struct CollegeFootballScheduleApp: App {
             ContentView()
                 .environment(store)
         }
-        .defaultSize(width: 420, height: 620)
+        .defaultSize(width: DrawingConstants.defaultWidth, height: DrawingConstants.defaultHeight)
         .commands {
             CommandGroup(after: .toolbar) {
                 Button("Refresh Schedule", action: refresh)
@@ -21,5 +21,10 @@ struct CollegeFootballScheduleApp: App {
     private func refresh() {
         // No team argument: the store already knows which one the window is on.
         Task { await store.load() }
+    }
+
+    private enum DrawingConstants {
+        static let defaultWidth: Double = 420
+        static let defaultHeight: Double = 620
     }
 }

@@ -8,7 +8,7 @@ struct KickoffDateTimeView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            HStack(spacing: 4) {
+            HStack(spacing: DrawingConstants.spacing) {
                 Text(game.date, format: .dateTime.weekday(.abbreviated).month(.abbreviated).day())
                 MiddleDotSeparator()
                 if game.hasConfirmedTime {
@@ -32,9 +32,15 @@ struct KickoffDateTimeView: View {
                 Text(network)
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                    .padding(4)
-                    .background(.quaternary, in: .rect(cornerRadius: 4))
+                    .padding(DrawingConstants.badgePadding)
+                    .background(.quaternary, in: .rect(cornerRadius: DrawingConstants.badgeCornerRadius))
             }
         }
+    }
+
+    private enum DrawingConstants {
+        static let spacing: Double = 4
+        static let badgePadding: Double = 4
+        static let badgeCornerRadius: Double = 4
     }
 }

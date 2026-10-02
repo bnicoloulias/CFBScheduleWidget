@@ -42,7 +42,7 @@ struct FeaturedGameView: View {
                 VStack(alignment: .leading) {
                     Text(game.matchupLine)
                         .font(.headline)
-                        .lineLimit(2)
+                        .lineLimit(DrawingConstants.matchupLineLimit)
                     if game.isNeutralSite, let city = game.venueCity {
                         Text("Neutral site · \(city)")
                             .font(.caption)
@@ -56,5 +56,9 @@ struct FeaturedGameView: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityDescription)
+    }
+
+    private enum DrawingConstants {
+        static let matchupLineLimit: Int = 2
     }
 }

@@ -14,7 +14,7 @@ struct GameTimingView: View {
     var isCompact = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: DrawingConstants.spacing) {
             if isLive {
                 LiveGameLineView(game: game, teamAbbreviation: teamAbbreviation)
             } else if game.status.isComplete {
@@ -25,5 +25,9 @@ struct GameTimingView: View {
                 KickoffLineView(game: game, showsVenue: showsVenue)
             }
         }
+    }
+
+    private enum DrawingConstants {
+        static let spacing: Double = 4
     }
 }

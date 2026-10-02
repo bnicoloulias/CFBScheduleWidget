@@ -11,6 +11,8 @@ enum AppTheme {
     static let cornerRadius: Double = 10
     static let logoSize: Double = 34
     static let smallLogoSize: Double = 20
+    /// Inset around the placeholder glyph, as a fraction of the logo size.
+    static let logoGlyphInset: Double = 0.1
 
     #if os(iOS)
     /// iOS text styles run much larger than macOS's, so on iPhone the widgets
