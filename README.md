@@ -1,8 +1,9 @@
 # College Football Schedule
 
-A macOS desktop widget for a college football team's schedule, plus a small
-host app that shows the full season. Pick any of the 762 teams ESPN publishes,
-per widget and independently in the app window. Clicking a widget opens that
+Widgets for a college football team's schedule — on the Mac desktop, the iPhone
+Home Screen, and the iPhone Lock Screen — plus a small host app that shows the
+full season. Pick any of the 762 teams ESPN publishes, per widget and
+independently in the app. Tapping a Home Screen or desktop widget opens that
 team's page on ESPN.
 
 > This is an independent hobby project. It is not affiliated with, endorsed by,
@@ -11,9 +12,12 @@ team's page on ESPN.
 
 ## Requirements
 
-- macOS 26 on Apple silicon
+- A Mac on Apple silicon running macOS 26
 - Xcode 26 or later
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen): `brew install xcodegen`
+- For iPhone: iOS 26. The Simulator needs nothing extra; a real iPhone needs an
+  Apple developer team (a free personal team works — see
+  [Running on an iPhone](#running-on-an-iphone)).
 
 ## Getting started
 
@@ -24,9 +28,9 @@ xcodegen generate
 open CollegeFootballSchedule.xcodeproj
 ```
 
-Run the **CollegeFootballSchedule** scheme once, then
-[add the widget](#installing-the-widget). No account, API key, or signing team is
-needed.
+Run the **CollegeFootballSchedule** scheme once with **My Mac** or an iPhone
+Simulator as the destination, then [add the widget](#installing-the-widget). No
+account, API key, or signing team is needed for either.
 
 ## What it shows
 
@@ -35,10 +39,20 @@ needed.
 | Small | The next game: opponent, rank, kickoff, TV network |
 | Medium | The next game beside the three after it |
 | Large | Record and standing, the next game, the rest of the slate, recent results |
+| Lock Screen rectangular | The matchup, then kickoff and network, or the live score and clock |
+| Lock Screen inline | One line above the clock, e.g. "at MICH · Sat 3:30 PM" |
+| Lock Screen circular | The opponent over the kickoff day, the score, or the result |
+
+The Lock Screen families are iPhone only. iPhone text runs larger than the
+Mac's, so on iPhone the Home Screen widgets use more compact layouts: shorter
+kickoff lines ("Tue 3:30 PM"), dates beside or beneath each game rather than in
+a second column, one recent result instead of two in Large, and a live score
+that drops to a tighter line or two scoreboard rows rather than truncating.
 
 While a game is being played the widget switches to a live score and clock and
 refreshes every five minutes. Between games it refreshes every three hours, and
-always wakes up in time for kickoff.
+always wakes up in time for kickoff. iOS budgets widget refreshes, so on iPhone
+the live score can lag behind the five-minute target.
 
 ## Data
 
@@ -75,7 +89,11 @@ xcodebuild -project CollegeFootballSchedule.xcodeproj -scheme "CollegeFootballSc
   -destination 'platform=macOS,arch=arm64' build
 xcodebuild -project CollegeFootballSchedule.xcodeproj -scheme "CollegeFootballSchedule" \
   -destination 'platform=macOS,arch=arm64' test
+xcodebuild -project CollegeFootballSchedule.xcodeproj -scheme "CollegeFootballSchedule" \
+  -destination 'generic/platform=iOS Simulator' build
 ```
+
+Tests run on the Mac; the iOS build checks that everything compiles for iPhone.
 
 **Do not pass `-derivedDataPath`.** Without it these commands write to the same
 `~/Library/Developer/Xcode/DerivedData` directory Xcode uses, so every build
@@ -96,10 +114,32 @@ Spotlight, so building to `/tmp` or anywhere else outside the repo registers
 just the same. Sameness is what matters, not where.
 
 Signing is ad-hoc ("Sign to Run Locally") so it builds with no provisioning
-profile and runs on the Mac that built it. An ad-hoc build copied to another Mac
-will be blocked by Gatekeeper; build from source there instead, or switch
-`CODE_SIGN_IDENTITY` and `DEVELOPMENT_TEAM` in `project.yml` to your own team.
-If you fork the project, change `bundleIdPrefix` too.
+profile and runs on the Mac that built it, or in the iOS Simulator. An ad-hoc
+build copied to another Mac will be blocked by Gatekeeper; build from source
+there instead. A real iPhone needs a signing team, set per developer as
+described below. If you fork the project, change `bundleIdPrefix` in
+`project.yml` too.
+
+### Running on an iPhone
+
+A real iPhone won't install an ad-hoc build, so for the `iphoneos` SDK only the
+targets switch to automatic signing with your own team. The team stays out of
+the repo:
+
+1. Create `Config/Local.xcconfig` (gitignored) containing your team ID, which is
+   listed in Xcode under **Settings → Accounts**:
+
+   ```
+   DEVELOPMENT_TEAM_ID = ABCDE12345
+   ```
+
+2. Change `bundleIdPrefix` in `project.yml` to something of your own, e.g.
+   `com.yourname`. Bundle identifiers are unique across all teams, so Xcode
+   won't provision the ones this repo uses for anyone else's team.
+3. Run `xcodegen generate`, pick your iPhone as the destination, and run.
+
+A free personal team works, but apps it signs expire after seven days and must
+be re-run from Xcode.
 
 Code is formatted with swift-format from the Xcode toolchain, configured by
 `.swift-format`:
@@ -110,13 +150,29 @@ xcrun swift-format format --in-place --recursive App Shared Widget Tests
 
 ## Installing the widget
 
-1. Build and run the app once — macOS only registers a widget after its host
-   app has launched.
-2. Right-click the desktop and choose **Edit Widgets**, or click the date in the
+Build and run the app once first — neither macOS nor iOS lists a widget until
+its host app has launched. Each widget then keeps its own team choice.
+
+On the Mac:
+
+1. Right-click the desktop and choose **Edit Widgets**, or click the date in the
    menu bar to open Notification Center and scroll to **Edit Widgets**.
-3. Find **College Football Schedule** and drag the size you want onto the desktop.
-4. Right-click the widget and choose **Edit "College Football Schedule"** to pick a
-   team. Each widget keeps its own choice.
+2. Find **College Football Schedule** and drag the size you want onto the desktop.
+3. Right-click the widget and choose **Edit "College Football Schedule"** to pick a
+   team.
+
+On iPhone:
+
+1. Touch and hold an empty part of the Home Screen, tap **Edit → Add Widget**,
+   find **College Football Schedule**, and add the size you want.
+2. For the Lock Screen, touch and hold the Lock Screen, tap **Customize → Lock
+   Screen**, then tap the widget area and choose a College Football Schedule
+   widget.
+3. Touch and hold the widget and choose **Edit Widget** to pick a team.
+
+The troubleshooting below is for the Mac, where LaunchServices and `chronod`
+can keep a widget on old code. On iPhone, deleting the app and running it again
+from Xcode clears the same kind of staleness.
 
 ### When the widget ignores your changes
 
@@ -242,13 +298,18 @@ description and configuration but does nothing for the icon.
 
 ```
 Shared/     Models, ESPN networking, and the views both targets draw with
-App/        The host window: full season list
-Widget/     WidgetKit extension: timeline provider and per-family layouts
-Tests/      Decoding, snapshot selection, and refresh-cadence tests
+App/        The host app (Mac window and iPhone screen): full season list
+Widget/     WidgetKit extension: timeline provider, family switch, WidgetKit previews
+Tests/      Decoding, snapshot selection, display formatting, and refresh-cadence tests
+Config/     Signing.xcconfig, plus your gitignored Local.xcconfig for iPhone signing
 ```
 
 `Shared/Models/WidgetRefreshPolicy.swift` decides when the widget next wakes up;
-it lives outside the extension so it can be unit tested.
+it lives outside the extension so it can be unit tested. The per-family layouts
+live in `Shared/Views` so the app's Mac canvas previews can draw them; each
+view keeps its spacing and sizes in a private `DrawingConstants` enum, and
+`AppTheme` holds the shared values, including `prefersCompactWidgets`, which
+switches the iPhone layouts on.
 
 [`ARCHITECTURE.md`](ARCHITECTURE.md) walks through every file and explains why
 the code is shaped the way it is.
