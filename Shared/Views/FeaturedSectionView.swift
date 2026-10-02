@@ -4,10 +4,12 @@ import SwiftUI
 struct FeaturedSectionView: View {
     let snapshot: ScheduleSnapshot
     let logos: [String: Image]
+    /// Shortens the kickoff line; see `KickoffLineView.isCompact`.
+    var isCompact = false
 
     var body: some View {
         if let featured = snapshot.featured {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading) {
                 if snapshot.isSeasonComplete {
                     SectionLabel(text: "Season complete")
                 }
@@ -20,7 +22,8 @@ struct FeaturedSectionView: View {
                     logo: logos[featured.opponent.id],
                     teamName: snapshot.teamName,
                     teamAbbreviation: snapshot.teamAbbreviation,
-                    showsStatus: !snapshot.isSeasonComplete
+                    showsStatus: !snapshot.isSeasonComplete,
+                    isCompact: isCompact
                 )
             }
         } else {

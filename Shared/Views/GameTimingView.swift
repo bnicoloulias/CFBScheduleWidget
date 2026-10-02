@@ -10,6 +10,8 @@ struct GameTimingView: View {
     let teamAbbreviation: String
     /// Off when the surrounding view already shows the venue.
     var showsVenue = true
+    /// Shortens the kickoff line; see `KickoffLineView.isCompact`.
+    var isCompact = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -18,7 +20,7 @@ struct GameTimingView: View {
             } else if game.status.isComplete {
                 FinalScoreLineView(game: game)
             } else {
-                KickoffLineView(game: game, showsVenue: showsVenue)
+                KickoffLineView(game: game, showsVenue: showsVenue, isCompact: isCompact)
             }
         }
     }

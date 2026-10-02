@@ -5,18 +5,17 @@ struct SmallScheduleView: View {
     let snapshot: ScheduleSnapshot
     let logos: [String: Image]
 
+    #if os(iOS)
+    /// iPhone's larger type leaves no room for the full date, the venue,
+    /// or a network badge on its own line.
+    private static let isCompact = true
+    #else
+    private static let isCompact = false
+    #endif
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            FeaturedSectionView(snapshot: snapshot, logos: logos)
-
-            Spacer(minLength: 0)
-
-            if let record = snapshot.recordSummary, !record.isEmpty {
-                Text("\(snapshot.teamAbbreviation) \(record)")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .accessibilityLabel("Record \(record)")
-            }
+            FeaturedSectionView(snapshot: snapshot, logos: logos, isCompact: Self.isCompact)
         }
     }
 }

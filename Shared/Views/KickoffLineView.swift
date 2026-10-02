@@ -6,8 +6,40 @@ struct KickoffLineView: View {
     let game: Game
     /// Off when the surrounding view already shows the venue.
     var showsVenue = true
+    /// One short line ("Tue 9:31 AM"), with the network only if it fits
+    /// beside it and no venue, for a column too narrow and short for more.
+    var isCompact = false
 
     var body: some View {
+        if isCompact {
+            compactBody
+        } else {
+            fullBody
+        }
+    }
+
+    private var compactBody: some View {
+        ViewThatFits(in: .horizontal) {
+            if let network = game.network {
+                HStack(spacing: 4) {
+                    compactKickoff
+                    separator
+                    Text(network)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            compactKickoff
+        }
+        .font(.subheadline)
+        .bold()
+        .lineLimit(1)
+    }
+
+    private var compactKickoff: some View {
+        Text(game.compactKickoffLine())
+    }
+
+    private var fullBody: some View {
         VStack(alignment: .leading) {
             #if os(iOS)
             // iPhone's larger type leaves the Large widget short of height,

@@ -11,6 +11,8 @@ struct FeaturedGameView: View {
     let teamAbbreviation: String
     /// Off when the surrounding view already says what state the game is in.
     var showsStatus = true
+    /// Shortens the kickoff line; see `KickoffLineView.isCompact`.
+    var isCompact = false
 
     private var accessibilityDescription: String {
         var parts = ["\(teamName) \(game.matchupLine)"]
@@ -29,7 +31,7 @@ struct FeaturedGameView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading) {
             if showsStatus {
                 GameStatusPill(game: game, isLive: isLive)
             }
@@ -50,7 +52,7 @@ struct FeaturedGameView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            GameTimingView(game: game, isLive: isLive, teamAbbreviation: teamAbbreviation)
+            GameTimingView(game: game, isLive: isLive, teamAbbreviation: teamAbbreviation, isCompact: isCompact)
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityDescription)
