@@ -7,9 +7,14 @@ struct LiveGameLineView: View {
 
     var body: some View {
         if let scoreLine = game.liveScoreLine(teamAbbreviation: teamAbbreviation) {
+            // Shrink rather than truncate: the truncated end is the followed
+            // team's own score, and iPhone's larger type overflows the Medium
+            // widget's half-width column with a four-letter abbreviation.
             Text(scoreLine)
                 .font(.headline)
                 .monospacedDigit()
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
         }
 
         if let detail = game.statusDetail {
