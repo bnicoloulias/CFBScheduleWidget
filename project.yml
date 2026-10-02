@@ -63,7 +63,11 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.bobbynicoloulias.CollegeFootballSchedule
-        PRODUCT_NAME: CollegeFootballSchedule
+        # The product name is what the Mac shows in Finder, Spotlight, the Dock
+        # and the menu bar. The module keeps the code name, so imports and
+        # @testable tests don't change with it.
+        PRODUCT_NAME: CFB Schedule Widget
+        PRODUCT_MODULE_NAME: CollegeFootballSchedule
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ENABLE_PREVIEWS: YES
         COMBINE_HIDPI_IMAGES: YES
@@ -130,7 +134,7 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         # XcodeGen derives the iOS-style host path now that the app is
         # multiplatform; the tests run on macOS, where the binary is nested.
-        TEST_HOST: $(BUILT_PRODUCTS_DIR)/CollegeFootballSchedule.app/Contents/MacOS/CollegeFootballSchedule
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/CFB Schedule Widget.app/Contents/MacOS/CFB Schedule Widget"
     dependencies:
       - target: CollegeFootballSchedule
 

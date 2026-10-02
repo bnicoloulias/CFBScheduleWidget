@@ -22,8 +22,8 @@ team's page on ESPN.
 ## Getting started
 
 ```sh
-git clone https://github.com/bnicoloulias/CollegeFootballSchedule.git
-cd CollegeFootballSchedule
+git clone https://github.com/bnicoloulias/CFBScheduleWidget.git
+cd CFBScheduleWidget
 xcodegen generate
 open CollegeFootballSchedule.xcodeproj
 ```
@@ -190,7 +190,7 @@ the one being drawn. Unregister each bad path, then delete it:
 
 ```sh
 LSREG=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister
-"$LSREG" -u /path/to/stale/CollegeFootballSchedule.app
+"$LSREG" -u "/path/to/stale/CFB Schedule Widget.app"
 rm -rf /path/to/stale/build-dir
 killall chronod
 ```
@@ -257,7 +257,7 @@ More than one means the older ones are stale. Unregister and delete each:
 
 ```sh
 LSREG=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister
-"$LSREG" -u <old-tree>/Build/Products/Debug/CollegeFootballSchedule.app
+"$LSREG" -u "<old-tree>/Build/Products/Debug/CFB Schedule Widget.app"
 rm -rf <old-tree>
 ```
 
@@ -285,7 +285,7 @@ Verify what LaunchServices would hand them, which is the same lookup the
 gallery performs:
 
 ```sh
-"$LSREG" -dump | grep -A80 "CollegeFootballSchedule.app (0x" | grep -iE "iconName|icon flags"
+"$LSREG" -dump | grep -A80 "CFB Schedule Widget.app (0x" | grep -iE "iconName|icon flags"
 ```
 
 (`$LSREG` as defined above — the tool is not on `PATH`.)

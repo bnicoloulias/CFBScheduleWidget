@@ -29,7 +29,7 @@ Work through these in order and report what you found at each step.
    change (e.g. `grep -c <IntentName> "<appex>/Contents/Resources/Metadata.appintents/extract.actionsdata"`).
    For each stale one, unregister *first*, then delete:
    ```sh
-   "$LSREG" -u /path/to/stale/CollegeFootballSchedule.app
+   "$LSREG" -u "/path/to/stale/CFB Schedule Widget.app"
    rm -rf /path/to/stale/build-dir
    ```
    Show the paths before `rm -rf` and never delete the current build.

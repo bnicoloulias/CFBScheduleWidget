@@ -745,7 +745,7 @@ comes with a retry button.
 
 Preview-only scaffolding, all `#if DEBUG` so none of it reaches a Release
 build. It lives in the app target **specifically** so that Xcode hosts these
-previews in `CollegeFootballSchedule.app` rather than the extension.
+previews in the app (`CFB Schedule Widget.app`) rather than the extension.
 
 - **`WidgetLayoutPreviews.swift`** — `#Preview` blocks for all three widget
   sizes plus the offline state, each at true widget dimensions.
